@@ -5,18 +5,17 @@ using AutoMapper;
 using Infrastructure.Interfaces;
 using Infrastructure.Base;
 using Application.Exceptions;
-using System.Globalization;
 
 namespace Application.Services
 {
-    public class UsuarioService<TEntity> : IUsuarioService where TEntity : class
+    public class CategoriaService<TEntity> : ICategoriaService where TEntity : class
     {
-        private readonly IUsuarioRepository _repository;
+        private readonly ICategoriaRepository _repository;
         private readonly IFaixaRepository _faixaRepository;
         private readonly IUnitOfWork _unitOfWork;
         private readonly IMapper _mapper;
 
-        public UsuarioService(IUsuarioRepository repository, IFaixaRepository faixaRepository, IUnitOfWork unitOfWork, IMapper mapper)
+        public CategoriaService(ICategoriaRepository repository, IFaixaRepository faixaRepository, IUnitOfWork unitOfWork, IMapper mapper)
         {
             _repository = repository;
             _faixaRepository = faixaRepository;
@@ -29,7 +28,7 @@ namespace Application.Services
             try
             {
                 var entities = _repository.Select().Where(e => e.Ativo is true).ToList();
-                entities.ForEach(entity => entity.Faixas = _faixaRepository.Select().Where(p => p.NomeUsuario == entity.NomeUsuario).ToList());
+                entities.ForEach(entity => entity.Faixas = _faixaRepository.Select().Where(p => p.CategoriaId == entity.Id).ToList());
 
                 var outputModels = entities.Select(s => _mapper.Map<TOutputModel>(s));
                 return outputModels;
@@ -40,18 +39,17 @@ namespace Application.Services
         public IEnumerable<TOutputModel> Add<TInputModel, TOutputModel, TValidator>(IEnumerable<TInputModel> inputModels)
             where TInputModel : class
             where TOutputModel : class
-            where TValidator : AbstractValidator<Usuario>
+            where TValidator : AbstractValidator<Categoria>
         {
             try
             {
-                var entities = inputModels.Select(inputModel => _mapper.Map<Usuario>(inputModel)).ToList();
+                var entities = inputModels.Select(inputModel => _mapper.Map<Categoria>(inputModel)).ToList();
 
                 foreach (var entity in entities)
                 {
                     Validation<TValidator>(entity);
-                    if (entity.DataNasc is not null) ValidaDataNasc(entity.DataNasc);
 
-                    if (_repository.Select(entity.NomeUsuario) is not null) throw new ConflictException($"O usuário {entity.NomeUsuario} já existe.");
+                    if (_repository.Select(entity.Id) is not null) throw new ConflictException($"O usuário {entity.Id} já existe.");
 
                     _repository.Insert(entity);
                 }
@@ -66,18 +64,17 @@ namespace Application.Services
         public IEnumerable<TOutputModel> Update<TInputModel, TOutputModel, TValidator>(IEnumerable<TInputModel> inputModels)
             where TInputModel : class
             where TOutputModel : class
-            where TValidator : AbstractValidator<Usuario>
+            where TValidator : AbstractValidator<Categoria>
         {
             try
             {
-                var entities = inputModels.Select(inputModel => _mapper.Map<Usuario>(inputModel)).ToList();
+                var entities = inputModels.Select(inputModel => _mapper.Map<Categoria>(inputModel)).ToList();
 
                 foreach (var entity in entities)
                 {
                     Validation<TValidator>(entity);
-                    if (entity.DataNasc is not null) ValidaDataNasc(entity.DataNasc);
 
-                    if (_repository.Select(entity.NomeUsuario) is null) throw new NotFoundException("Registro não existe na base de dados.");
+                    if (_repository.Select(entity.Id) is null) throw new NotFoundException("Registro não existe na base de dados.");
                     _repository.Update(entity);
                 }
                 _unitOfWork.Commit();
@@ -88,11 +85,11 @@ namespace Application.Services
             catch (Exception) { throw; }
         }
 
-        public void Delete(string username)
+        public void Delete(string id)
         {
             try
             {
-                var entity = _repository.Select(username);
+                var entity = _repository.Select(int.Parse(id));
 
                 if (entity is null) throw new NotFoundException("Registro não existe na base de dados.");
 
@@ -103,8 +100,7 @@ namespace Application.Services
             catch (Exception) { throw; }
         }
 
-        #region Validações
-        public void Validation<TValidator>(Usuario entity) where TValidator : AbstractValidator<Usuario>
+        public void Validation<TValidator>(Categoria entity) where TValidator : AbstractValidator<Categoria>
         {
             try
             {
@@ -121,34 +117,5 @@ namespace Application.Services
             }
             catch (Exception) { throw; }
         }
-
-        public void ValidaDataNasc(string dataNasc)
-        {
-            bool dataValida = true;
-
-            // Tenta extrair o dia, mês e ano da string
-            if (!int.TryParse(dataNasc.Substring(0, 2), out int day) ||
-                !int.TryParse(dataNasc.Substring(2, 2), out int month) ||
-                !int.TryParse(dataNasc.Substring(4, 4), out int year))
-            {
-                dataValida = false;
-            }
-
-            // Verifica se a data é válida
-            DateTime parsedDate;
-            if (!DateTime.TryParseExact(dataNasc, "ddMMyyyy", CultureInfo.InvariantCulture, DateTimeStyles.None, out parsedDate))
-            {
-                dataValida = false;
-            }
-
-            // Verifica se a data não é no futuro
-            if (parsedDate > DateTime.Now)
-            {
-                dataValida = false;
-            }
-
-            if (!dataValida) throw new Exception($"Data de Nascimento {dataNasc} inválida");
-        }
-        #endregion
     }
 }

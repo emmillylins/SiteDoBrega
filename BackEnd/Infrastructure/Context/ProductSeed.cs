@@ -1,4 +1,4 @@
-﻿using Domain.Entities;
+using Domain.Entities;
 using Microsoft.EntityFrameworkCore;
 
 namespace Infrastructure.Context
@@ -17,10 +17,10 @@ namespace Infrastructure.Context
         public ModelBuilder SeedGenerico(ModelBuilder mdBuilder)
         {
             mdBuilder.Entity<Categoria>().HasData(
-                new Categoria(1, "Brega Romântico", "/brega-romantico", "priscila-senna.jpeg"),
-                new Categoria(2, "Brega Funk", "/brega-funk", "shevelloco.jpg"),
-                new Categoria(3, "Brega das Antigas", "/brega-das-antigas", "reginaldo-rossi.jpg"),
-                new Categoria(4, "Favoritas", "/favoritas", "biel-xcamoso.jpg")
+                new Categoria(1, "Brega Romântico", "#", "https://cdn.folhape.com.br/img/pc/1100/1/dn_arquivo/2022/10/whatsapp-image-2022-10-11-at-120717.jpeg"),
+                new Categoria(2, "Brega Funk", "/brega-funk", "https://images2.imgbox.com/36/d5/TLdNWWQ0_o.jpg"),
+                new Categoria(3, "Brega das Antigas", "#", "https://lh6.googleusercontent.com/proxy/UfZbTLXNppeqyf9wu3S0wtmFccHP5Z22czUPzXtbgQrEQMEmKrzrUPCJSsV8WAhVbV80DVbHNHmneEQraZVpwQ-5-bCmc78bs2BRSq5Z_8ZQAQ8hVDYfUvR_6C7XNiWhO2Ee4LewAplBu0_ydE2KTn9L7PZRv8mCRA"),
+                new Categoria(4, "Favoritas", "#", "https://cdns-images.dzcdn.net/images/artist/c4af4680f867f9721056a4ad3748c76b/1900x1900-000000-80-0-0.jpg")
                 );
             return mdBuilder;
         }

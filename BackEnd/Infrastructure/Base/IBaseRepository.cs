@@ -11,6 +11,9 @@ namespace Infrastructure.Base
         IList<TEntity> Select();
         TEntity Select(int id);
 
+        void Delete(string id);
+        TEntity Select(string id);
+
         Task<TEntity> GetByIdAsync(int id);
         Task<TEntity> FirstAsync(Expression<Func<TEntity, bool>> expression);
         Task<int> CountAsync(Expression<Func<TEntity, bool>> expression);

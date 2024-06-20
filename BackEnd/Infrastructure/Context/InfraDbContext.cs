@@ -11,11 +11,11 @@ namespace Infrastructure.Context
             ChangeTracker.AutoDetectChangesEnabled = false;
         }
 
-        public DbSet<Generico> Generico { get; set; }
+        public DbSet<Categoria> Generico { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.Entity<Generico>().HasNoKey();
+            modelBuilder.Entity<Categoria>().HasNoKey();
 
             ProductSeed productSeed = new ProductSeed();
             modelBuilder = productSeed.Seed(modelBuilder);

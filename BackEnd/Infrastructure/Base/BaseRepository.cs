@@ -20,6 +20,9 @@ namespace Infrastructure.Base
         public IList<TEntity> Select() => _dbSet.ToList();
         public TEntity Select(int id) => _dbSet.Find(id);
 
+        public virtual void Delete(string id) => _dbSet.Remove(Select(id));
+        public virtual TEntity Select(string id) => _dbSet.Find(id);
+
 
         public async Task<int> CountAsync(Expression<System.Func<TEntity, bool>> expression)
         {

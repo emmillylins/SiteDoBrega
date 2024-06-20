@@ -5,9 +5,9 @@ using Infrastructure.Interfaces;
 
 namespace Infrastructure.Repositories
 {
-    public class UsuarioRepository : BaseRepository<Usuario>, IUsuarioRepository
+    public class CategoriaRepository : BaseRepository<Categoria>, ICategoriaRepository
     {
-        public UsuarioRepository(InfraDbContext context) : base(context)
+        public CategoriaRepository(InfraDbContext context) : base(context)
         {
         }
     }

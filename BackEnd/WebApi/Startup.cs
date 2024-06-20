@@ -2,6 +2,7 @@
 using Infrastructure.Context;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.OpenApi.Models;
+using System.Reflection;
 using WebApi.Configuration;
 
 namespace WebApi
@@ -17,7 +18,7 @@ namespace WebApi
 
         public void ConfigureServices(IServiceCollection services)
         {
-            // Chama o método de registro de serviços do DependencyInjectionConfig
+            // DependencyInjectionConfig
             services.ResolveDependencies();
 
             services.AddControllers();
@@ -30,6 +31,11 @@ namespace WebApi
                     Version = "v1",
                     Contact = new OpenApiContact() { Name = "Emmy Lins", Email = "emycmlins@gmail.com" },
                 });
+
+                // documentação do Swagger
+                var xmlFile = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
+                var xmlPath = Path.Combine(AppContext.BaseDirectory, xmlFile);
+                c.IncludeXmlComments(xmlPath);
             });
 
             services.AddFluentValidationAutoValidation();
@@ -45,7 +51,7 @@ namespace WebApi
                 });
             });
 
-            // Configuração do AutoMapper
+            // configuração do AutoMapper
             services.AddAutoMapper(typeof(Startup));
         }
 
@@ -64,7 +70,7 @@ namespace WebApi
             app.UseHttpsRedirection();
             app.UseStaticFiles();
 
-            // Configuração do middleware do Swagger
+            // configuração do middleware do Swagger
             app.UseSwagger();
             app.UseSwaggerUI(c =>
             {

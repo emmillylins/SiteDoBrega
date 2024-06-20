@@ -8,8 +8,14 @@ namespace WebApi.Configuration
     {
         public AutomapperConfig()
         {
-            CreateMap<CreateUsuarioDto, Usuario>().ReverseMap();
+            CreateMap<CategoriaDto, Categoria>().ReverseMap();
+            CreateMap<CreateCategoriaDto, Categoria>().ReverseMap();
+
             CreateMap<UsuarioDto, Usuario>().ReverseMap();
+            CreateMap<CreateUsuarioDto, Usuario>().ReverseMap();
+
+            CreateMap<FaixaDto, Faixa>().ReverseMap();
+            CreateMap<CreateFaixaDto, Faixa>().ReverseMap();
         }
     }
 }

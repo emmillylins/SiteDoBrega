@@ -28,6 +28,12 @@ namespace WebApi.Configuration
             services.AddScoped<IUsuarioService, UsuarioService<Usuario>>();
             services.AddScoped<IUsuarioRepository, UsuarioRepository>();
 
+            services.AddScoped<IFaixaService, FaixaService<Faixa>>();
+            services.AddScoped<IFaixaRepository, FaixaRepository>();
+
+            services.AddScoped<ICategoriaService, CategoriaService<Categoria>>();
+            services.AddScoped<ICategoriaRepository, CategoriaRepository>();
+
             //permite personalizar a documentação do Swagger conforme necessário.
             //services.AddTransient<IConfigureOptions<SwaggerGenOptions>, ConfigureSwaggerOptions>();                       
 

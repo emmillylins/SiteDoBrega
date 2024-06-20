@@ -11,7 +11,7 @@
   #categorias #cat {
     position: relative;
     overflow: hidden; /* Adicionado para cortar a imagem que ultrapassa a div */
-    height: 16rem;
+    height: 18rem;
   }
   
   #categorias #cat a {

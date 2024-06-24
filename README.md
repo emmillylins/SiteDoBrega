@@ -1,4 +1,4 @@
-# SiteDoBrega
+# SitedoBrega
 Versão WEB: <a href="https://sitedobrega.netlify.app/" target="_blank" rel="noopener">SiteDoBrega</a>
   
 ### Sobre nós

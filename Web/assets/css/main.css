@@ -18,24 +18,34 @@ a:hover, a {
 --------------------------------------------------------------*/
 .header {
   transition: all 0.5s;
-  padding: 0 10px;
+  margin: 20px 20px 0 10px;
   display: flex;
   justify-content: space-between;
+  position: relative;
+  align-items: center;
+  z-index: 1000;
+}
+
+.logo,
+.social-icons {
+  flex: 1;
 }
 
 .header .logo h1 {
   font-family: 'Inter', sans-serif;
   font-size: 25px;
   margin: 0;
-  padding-top: 5px;
   font-weight: 500;
   color: #688d38;
+  /* align-self: center;
+  justify-self: center; */
 }
 
 .header .social-icons {
-  margin-left: 5%;
-  padding-top: 16px;
+  display: flex;
   padding-right: 7px;
+  justify-content: flex-end;
+  align-items: center;
 }
 
 .header .social-icons i {
@@ -101,10 +111,13 @@ a:hover, a {
 --------------------------------------------------------------*/
 @media (min-width: 900px) {
   .navbar {
+    position: absolute;
+    left: 50%;  
+    transform: translateX(-50%);  
     padding: 0;
     display: flex;
     align-items: center;
-    justify-content: space-between;
+    justify-content: center;
   }
 
   .navbar ul {
@@ -128,6 +141,10 @@ a:hover, a {
     font-weight: 400;
     color: rgba(255, 255, 255, 0.5);
     transition: 0.3s;
+  }
+
+  .navbar a {
+    padding: 0 15px;
   }
 
   .navbar a i,
@@ -319,36 +336,6 @@ a:hover, a {
   }
 
 }
-/*--------------------------------------------------------------
-# Scroll top button
---------------------------------------------------------------*/
-.scroll-top {
-  position: fixed;
-  visibility: hidden;
-  opacity: 0;
-  right: 15px;
-  background: #688d38;
-  padding: 7px;
-  border-radius: 50px;
-  transition: all 0.4s;
-}
-
-.scroll-top i {
-  font-size: 24px;
-  color: #fff;
-  line-height: 0;
-}
-
-.scroll-top:hover {
-  background: #688d38b9;
-  color: #fff;
-}
-
-.scroll-top.active {
-  visibility: visible;
-  opacity: 1;
-  bottom: 50px;
-}
 
 /*--------------------------------------------------------------
 # barra de rolagem
@@ -442,7 +429,7 @@ a:hover, a {
   
   .banner .btn-get-started:hover {
     background: #688d38c9;
-    transform: scale(1.04);
+    transform: scale(1.05);
   }
   
   @media (max-width: 1100px) {

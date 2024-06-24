@@ -66,24 +66,6 @@ document.addEventListener('DOMContentLoaded', () => {
     }));
   }
 });
-  
-function addEventOnClick() {
-    const links = document.querySelectorAll('a[data-id]');
-    links.forEach(link => {
-        link.addEventListener('click', async function(event) {
-            event.preventDefault(); // Previne a navegação padrão
-
-            const categoryId = this.getAttribute('data-id');
-            const categoryUrl = this.getAttribute('href');
-
-            // Chama a função getfaixas com o ID da categoria
-            const faixas = await getFaixas(categoryId);
-
-            // Redireciona para a URL após a função ser chamada
-            window.location.href = categoryUrl;
-        });
-    });
-}
 
 function popularNavbar(categorias) {
   const navbarUl = document.querySelector('#dynamic-navbar');
@@ -155,13 +137,31 @@ function popularGrid(categorias) {
   });
 }
 
-function carregarFaixas() {
+async function carregarFaixas() {
   const categoriaId = localStorage.getItem('categoriaId');
   if (categoriaId) {
-      getFaixas(categoriaId).then(faixas => {
-          console.log(faixas);
-          // Aqui você pode adicionar código para exibir as faixas na página
-      });
+    getFaixas(categoriaId).then(faixas => {
+      console.log(faixas);
+
+      const gallery = document.getElementById('gallery');
+      gallery.innerHTML = ''; // Limpa o conteúdo existente
+    
+      const row = document.createElement('div');
+      row.className = 'row';
+    
+      faixas.forEach(faixa => {
+        const col = document.createElement('div');
+        col.className = 'col';
+    
+        const songDiv = document.createElement('div');
+        songDiv.className = 'song';
+        songDiv.innerHTML = faixa.link;
+    
+        col.appendChild(songDiv);
+        row.appendChild(col);
+      });    
+      gallery.appendChild(row);
+    });
   } else {
       console.error('Categoria ID não encontrado');
   }

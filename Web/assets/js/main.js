@@ -67,6 +67,8 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 });
 
+
+
 function popularNavbar(categorias) {
   const navbarUl = document.querySelector('#dynamic-navbar');
   categorias.forEach(categoria => {
@@ -82,6 +84,7 @@ function popularNavbar(categorias) {
       a.addEventListener('click', function(event) {
         event.preventDefault(); // Impede o redirecionamento imediato
         localStorage.setItem('categoriaId', categoria.id);
+        localStorage.setItem('categoriaDesc', categoria.desc);
         window.location.href = categoria.url; // Redireciona após salvar o id
       });
 
@@ -101,7 +104,7 @@ function popularGrid(categorias) {
   }
 
   let count = 0; // Contador para controlar a alternância das classes  
-  categorias.forEach(category => {
+  categorias.forEach(categoria => {
     let colClass;
     
     // Definir a classe com base no valor do contador
@@ -113,45 +116,63 @@ function popularGrid(categorias) {
     // Incrementar o contador, resetando a cada 3
     count = (count + 1) % 3;
 
-    const categoryDiv = document.createElement('div');
-    categoryDiv.id = 'cat';
-    categoryDiv.className = colClass;
+    const categoriaDiv = document.createElement('div');
+    categoriaDiv.id = 'cat';
+    categoriaDiv.className = colClass;
 
     const link = document.createElement('a');
-    link.href = category.url;
-    link.dataset.id = category.id;
+    link.href = categoria.url;
+    link.dataset.id = categoria.id;
     link.innerHTML = `
-      <img src="${category.img}" alt="${category.desc}">
-      <div class="desc">${category.desc}</div>
+      <img src="${categoria.img}" alt="${categoria.desc}">
+      <div class="desc">${categoria.desc}</div>
     `;
 
     // Adicionar evento de clique
     link.addEventListener('click', function(event) {
       event.preventDefault(); // Impede o redirecionamento imediato
-      localStorage.setItem('categoriaId', category.id);
-      window.location.href = category.url; // Redireciona após salvar o id
+      localStorage.setItem('categoriaId', categoria.id);
+      localStorage.setItem('categoriaDesc', categoria.desc);
+      window.location.href = categoria.url; // Redireciona após salvar o id
     });
 
-    categoryDiv.appendChild(link);
-    categoriesContainer.appendChild(categoryDiv);
+    categoriaDiv.appendChild(link);
+    categoriesContainer.appendChild(categoriaDiv);
   });
+}
+
+async function carregarCategoriaDesc(){
+  const desc = localStorage.getItem('categoriaDesc');
+  const span = document.getElementById('categoria-desc');
+
+
+
+  if (desc) {
+      span.textContent = desc.toUpperCase();
+  } else {
+      span.textContent = 'Unknown';
+  }  
 }
 
 async function carregarFaixas() {
   const categoriaId = localStorage.getItem('categoriaId');
   if (categoriaId) {
-    getFaixas(categoriaId).then(faixas => {
-      console.log(faixas);
 
+    getFaixas(categoriaId).then(faixas => {
       const gallery = document.getElementById('gallery');
-      gallery.innerHTML = ''; // Limpa o conteúdo existente
+      gallery.innerHTML = ''; // Limpa o conteúdo existente          
+
+      if (faixas.length === 0) {
+        gallery.innerHTML = '<p style="text-align: center; color: rgba(255, 255, 255, 0.6); font-size: 16px;">nenhuma faixa de música disponível</p>';
+        return;
+      }
     
       const row = document.createElement('div');
       row.className = 'row';
     
       faixas.forEach(faixa => {
         const col = document.createElement('div');
-        col.className = 'col';
+        col.className = 'coluna';
     
         const songDiv = document.createElement('div');
         songDiv.className = 'song';
@@ -165,4 +186,53 @@ async function carregarFaixas() {
   } else {
       console.error('Categoria ID não encontrado');
   }
+}
+
+async function dropdownCategorias() {
+  try {
+      const categorias = await getCategorias(); // Aguarda a Promise ser resolvida
+
+      const selectCategoria = document.getElementById('categoria');
+      selectCategoria.innerHTML = ''; // Limpa o dropdown antes de adicionar novas opções
+
+      categorias.forEach(categoria => {
+          const option = document.createElement('option');
+          option.value = categoria.id;
+          option.textContent = categoria.desc;
+          selectCategoria.appendChild(option);
+      });
+  } catch (error) {
+      console.error('Erro ao carregar categorias:', error);
+  }
+}
+
+
+//novo form
+function clonarForm() {
+  var formTemplate = document.getElementById('form-template');
+  var newForm = formTemplate.cloneNode(true);
+
+  // Clear the input values in the cloned form
+  var inputs = newForm.getElementsByTagName('input');
+  for (var i = 0; i < inputs.length; i++) {
+      inputs[i].value = '';
+  }
+  var textareas = newForm.getElementsByTagName('textarea');
+  for (var i = 0; i < textareas.length; i++) {
+      textareas[i].value = '';
+  }
+  var selects = newForm.getElementsByTagName('select');
+  for (var i = 0; i < selects.length; i++) {
+      selects[i].selectedIndex = 0;
+  }
+  
+  // Esconder botões do formulário superior se já não estiverem escondidos
+  var currentForm = document.querySelector('.form-container');
+  var buttons = currentForm.querySelector('.botao');
+  if (buttons) {
+      buttons.style.display = 'none';
+  }
+
+  // Append the cloned form to the section
+  document.getElementById('cadastro').appendChild(newForm);
 }

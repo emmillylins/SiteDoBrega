@@ -3,48 +3,23 @@
 --------------------------------------------------------------*/
 
 @media (min-width: 1200px) {
-    .contact .row,
+    .row,
     .cadastro .row {
       display: flex;
       justify-content: center;
     }
   }
   
-  .contact h2,
-  .cadastro h2 {
-    text-align: center;
-    color: #ffffffd2;
-    font-family: 'Open Sans','Cardo', sans-serif;
-    font-size: 25px;
-    font-weight: 500;
-    letter-spacing: 0.5px;
-  }
-  
-  .contact .email-form, .form-dados {
+  .email-form, .form-dados {
     width: 100%;
   }
   
-  .contact .email-form .form-group,
+  .email-form .form-group,
   .form-dados .form-group {
     padding-bottom: 0px;
   }
   
-  .contact .email-form .error-message,
-  .form-dados .error-message {
-    display: none;
-    color: #fff;
-    background: #df1529;
-    text-align: left;
-    padding: 15px;
-    font-weight: 600;
-  }
-  
-  .contact .email-form .error-message br+br,
-  .form-dados .error-message br+br {
-    margin-top: 25px;
-  }
-  
-  .contact .email-form .sent-message,
+  .email-form .sent-message,
   .form-dados .sent-message {
     display: none;
     color: #fff;
@@ -54,7 +29,7 @@
     font-weight: 600;
   }
   
-  .contact .email-form .loading,
+  .email-form .loading,
   .form-dados .loading {
     display: none;
     background: #161718;;
@@ -63,7 +38,7 @@
     color: rgba(255, 255, 255, 0.6);
   }
   
-  .contact .email-form .loading:before,
+  .email-form .loading:before,
   .form-dados .loading:before {
     content: "";
     display: inline-block;
@@ -76,8 +51,8 @@
     animation: animate-loading 1s linear infinite;
   }
   
-  .contact .email-form input,
-  .contact .email-form textarea,
+  .email-form input,
+  .email-form textarea,
   .form-dados input,
   .form-dados textarea {
     border-radius: 4px;
@@ -88,16 +63,16 @@
     color: #fff;
   }
   
-  .contact .email-form input,
+  .email-form input,
   .form-dados input {
     height: 44px;
   }
   
-  .contact .email-form textarea {
+  .email-form textarea {
     padding: 10px 12px;
   }
   
-  .contact .email-form button[type=submit],
+  .email-form button[type=submit],
   .form-dados button[type=submit] {
     font-weight: bold;
     letter-spacing: 1px;
@@ -109,7 +84,7 @@
     border-radius: 4px;
   }
   
-  .contact .email-form button[type=submit]:hover,
+  .email-form button[type=submit]:hover,
   .form-dados button[type=submit]:hover {
     background: #688d38b9;
   }

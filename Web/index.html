@@ -16,23 +16,9 @@
   
   <!-- Template Main CSS File -->
   <link href="assets/css/main.css" rel="stylesheet">
-  <link href="assets/css/index.css" rel="stylesheet">
+  <link href="assets/css/home.css" rel="stylesheet">
 
   <link rel="manifest" href="manifest.json"/>
-
-   <!-- SCRIPT -->
-  <script src="assets/js/main.js"></script>
-  <script src="assets/js/service.js"></script>
-  <script>navigator.serviceWorker.register("service-worker.js")</script>
-
-  <script>
-    async function init() {
-        const categorias = await getCategorias();
-        popularNavbar(categorias);
-        popularGrid(categorias);
-    }
-    document.addEventListener('DOMContentLoaded', init);
-  </script>
 </head>
 
 <body>
@@ -52,7 +38,7 @@
               <!-- navbar dinâmica -->
             </ul>
           </li>      
-          <li><a href="#">Fale conosco</a></li>
+          <li><a href="cadastro.html">Cadastro</a></li>
         </ul>
       </nav>
       <!-- end navbar -->
@@ -72,7 +58,7 @@
       <div class="text">
           <h2>Eu sou <span>htemyl</span> e esse é o melhor site de Brega Recifense que você vai encontrar</h2>
           <p>Aqui tem de tudo, do brega funk ao brega romântico. Uma playlist completa pra você castelar e dançar passinho até não aguentar mais.</p>
-          <a href="cadastro.html" class="btn-get-started">Cadastro de Bregosos</a>
+          <a href="cadastro.html" class="btn-get-started">Cadastro de bregas</a>
       </div>
     </div>
   </section>
@@ -98,5 +84,19 @@
     </div>
   </footer>
   <!-- end footer -->
+
+   <!-- SCRIPT -->
+  <script src="assets/js/main.js"></script>
+  <script src="assets/js/service.js"></script>
+  <script>navigator.serviceWorker.register("service-worker.js")</script>
+
+  <script>
+    async function init() {
+      const categorias = await getCategorias();
+      popularNavbar(categorias);
+      popularGrid(categorias);
+    }
+    document.addEventListener('DOMContentLoaded', init);
+  </script>
 </body>
 </html>

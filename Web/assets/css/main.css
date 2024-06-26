@@ -388,14 +388,14 @@ a:hover, a {
     line-height: 1;
   }
   
-  .banner h2 span {
+  h2 span {
     position: relative;
     z-index: 1;
     padding: 0 5px;
     display: inline-block;
   }
   
-  .banner h2 span:before {
+  h2 span:before {
     content: "";
     position: absolute;
     height: 40%;
@@ -493,3 +493,36 @@ a:hover, a {
     font-size: bold;
     color: #688d38;
   }
+
+  
+  /*--------------------------------------------------------------
+  # Scroll top button
+  --------------------------------------------------------------*/
+  .scroll-top {
+      position: fixed;
+      visibility: hidden;
+      opacity: 0;
+      right: 15px;
+      background: #688d38;
+      padding: 7px;
+      border-radius: 50px;
+      transition: all 0.4s;
+    }
+    
+    .scroll-top i {
+      font-size: 24px;
+      color: #fff;
+      line-height: 0;
+    }
+    
+    .scroll-top:hover {
+      background: #688d38b9;
+      color: #fff;
+    }
+    
+    .scroll-top.active {
+      visibility: visible;
+      opacity: 1;
+      bottom: 50px;
+    }
+    

@@ -26,6 +26,28 @@ async function getFaixas(categoriaId) {
   }
 }
 
+async function getCategoriaById(id) {
+    try {
+      const url = `https://localhost:5000/api/categorias/${id}`
+      const response = await fetch(url);
+      const result = await response.json();
+
+      if (result.success) {
+        result.data
+          if (result.data.url != "#") result.data.url = result.data.url + '.html';
+        return result.data;
+      } 
+      else {
+        console.error('Erro ao buscar categorias:', result.message);
+        return [];
+      }
+    } 
+    catch (error) {
+      console.error('Erro ao fazer a requisição:', error);
+      return [];
+    }
+}
+
 async function getCategorias() {
     try {
       const response = await fetch('https://localhost:5000/api/categorias');
@@ -46,4 +68,39 @@ async function getCategorias() {
       console.error('Erro ao fazer a requisição:', error);
       return [];
     }
+}
+
+function postFaixas(event) {
+  event.preventDefault();
+
+  const titulo = document.getElementById('titulo').value;
+  const artista = document.getElementById('artista').value;
+  const link = document.getElementById('link').value;
+  const categoriaId = document.getElementById('categoria').value;
+  const nomeUsuario = document.getElementById('usuario').value;
+
+  const faixa = {
+    titulo: titulo,
+    artista: artista,
+    link: link,
+    categoriaId: parseInt(categoriaId, 10),
+    nomeUsuario: nomeUsuario
+  };
+
+  const data = [faixa];
+
+  fetch('https://localhost:5000/api/faixas', {
+      method: 'POST',
+      headers: {
+          'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(data)
+  })
+  .then(response => response.json())
+  .then(data => {
+      console.log('Success:', data);
+  })
+  .catch((error) => {
+      console.error('Error:', error);
+  });
 }

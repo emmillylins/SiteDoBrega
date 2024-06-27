@@ -1,4 +1,4 @@
-﻿using FluentValidation.AspNetCore;
+using FluentValidation.AspNetCore;
 using Infrastructure.Context;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.OpenApi.Models;
@@ -32,7 +32,7 @@ namespace WebApi
                     Contact = new OpenApiContact() { Name = "Emmy Lins", Email = "emycmlins@gmail.com" },
                 });
 
-                // documentação do Swagger
+                // Documentação do Swagger
                 var xmlFile = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
                 var xmlPath = Path.Combine(AppContext.BaseDirectory, xmlFile);
                 c.IncludeXmlComments(xmlPath);
@@ -40,6 +40,18 @@ namespace WebApi
 
             services.AddFluentValidationAutoValidation();
             services.AddFluentValidationClientsideAdapters();
+
+            // Adicionar configuração de CORS
+            services.AddCors(options =>
+            {
+                options.AddPolicy("AllowAllOrigins", builder =>
+                {
+                    builder
+                        .AllowAnyOrigin()
+                        .AllowAnyMethod()
+                        .AllowAnyHeader();
+                });
+            });
 
             services.AddDbContext<InfraDbContext>(options =>
             {
@@ -51,7 +63,7 @@ namespace WebApi
                 });
             });
 
-            // configuração do AutoMapper
+            // Configuração do AutoMapper
             services.AddAutoMapper(typeof(Startup));
         }
 
@@ -70,7 +82,7 @@ namespace WebApi
             app.UseHttpsRedirection();
             app.UseStaticFiles();
 
-            // configuração do middleware do Swagger
+            // Configuração do middleware do Swagger
             app.UseSwagger();
             app.UseSwaggerUI(c =>
             {
@@ -79,9 +91,11 @@ namespace WebApi
             });
 
             app.UseRouting();
-            app.UseAuthorization();
 
-            app.UseCors(options => options.AllowAnyOrigin());
+            // Aplicar a política de CORS antes do middleware de autorização
+            app.UseCors("AllowAllOrigins");
+
+            app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>
             {
@@ -89,5 +103,4 @@ namespace WebApi
             });
         }
     }
-
 }

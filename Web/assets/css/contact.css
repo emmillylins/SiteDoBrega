@@ -1,0 +1,130 @@
+/*--------------------------------------------------------------
+# form
+--------------------------------------------------------------*/
+
+@media (min-width: 1200px) {
+    .row,
+    .cadastro .row {
+      display: flex;
+      justify-content: center;
+    }
+  }
+  
+  .email-form, .form-dados {
+    width: 100%;
+  }
+  
+  .email-form .form-group,
+  .form-dados .form-group {
+    padding-bottom: 0px;
+  }
+  
+  .email-form .sent-message,
+  .form-dados .sent-message {
+    display: none;
+    color: #fff;
+    background: #688d38;
+    text-align: center;
+    padding: 15px;
+    font-weight: 600;
+  }
+  
+  .email-form .loading,
+  .form-dados .loading {
+    display: none;
+    background: #161718;;
+    text-align: center;
+    padding: 15px;
+    color: rgba(255, 255, 255, 0.6);
+  }
+  
+  .email-form .loading:before,
+  .form-dados .loading:before {
+    content: "";
+    display: inline-block;
+    border-radius: 50%;
+    width: 24px;
+    height: 24px;
+    margin: 0 10px -6px 0;
+    border: 3px solid #688d38;
+    border-top-color: #161718;
+    animation: animate-loading 1s linear infinite;
+  }
+  
+  .email-form input,
+  .email-form textarea,
+  .form-dados input,
+  .form-dados textarea {
+    border-radius: 4px;
+    box-shadow: none;
+    font-size: 14px;
+    background-color: #161718;
+    border: 1px solid #2e3133;
+    color: #fff;
+  }
+  
+  .email-form input,
+  .form-dados input {
+    height: 44px;
+  }
+  
+  .email-form textarea {
+    padding: 10px 12px;
+  }
+  
+  .email-form button[type=submit],
+  .form-dados button[type=submit] {
+    font-weight: bold;
+    letter-spacing: 1px;
+    background: #688d38;
+    border: 0;
+    padding: 10px 100px;
+    color: #fff;
+    transition: 0.4s;
+    border-radius: 4px;
+  }
+  
+  .email-form button[type=submit]:hover,
+  .form-dados button[type=submit]:hover {
+    background: #688d38b9;
+  }
+  
+  @keyframes animate-loading {
+    0% {
+      transform: rotate(0deg);
+    }
+  
+    100% {
+      transform: rotate(360deg);
+    }
+  }
+  
+  
+  .col-lg-4, .col-md6 {
+    height: fit-content;
+  }
+  
+  table {
+    border-collapse: collapse;
+    width: 100%;
+    max-width: 800px;
+    margin: 0 auto;
+  }
+  
+  th,
+  td {
+    padding: 12px;
+    text-align: left;
+  }
+  
+  th {
+    background-color: #000;
+    color: #fff;
+    
+  }
+  
+  td {
+    background-color: #161718;
+    color: rgba(255, 255, 255, 0.6);
+    border: 1px solid #2e3133;
+  }

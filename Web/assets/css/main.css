@@ -17,7 +17,7 @@ a:hover, a {
 # Header
 --------------------------------------------------------------*/
 .header {
-  transition: all 0.5s;
+  /* transition: all 0.5s; */
   margin: 20px 20px 0 10px;
   display: flex;
   justify-content: space-between;
@@ -37,8 +37,6 @@ a:hover, a {
   margin: 0;
   font-weight: 500;
   color: #688d38;
-  /* align-self: center;
-  justify-self: center; */
 }
 
 .header .social-icons {
@@ -65,11 +63,16 @@ a:hover, a {
 }
 
 @media (max-width: 900px) {
+  
+  .header {
+    margin: 10px 15px;
+  }
+
   .header .logo {
     margin-right: auto;
   }
   .header .social-icons {
-    padding-top: 17px;
+    padding-right: 20px;
   }
   
   .header .social-icons i {
@@ -86,8 +89,12 @@ a:hover, a {
 /* MOBILE HEADER*/
 @media (max-width: 500px) {
 
-  .header .social-icons {
-    padding-top: 13px;
+  .header {
+    margin: 20px 15px;
+  }
+
+  .header .social-icons {    
+    padding-right: 20px;
   }
 
   .header .social-icons i {
@@ -95,7 +102,7 @@ a:hover, a {
     z-index: 9996;
   }
   .header .logo h1 {
-    font-size: 26px;
+    font-size: 23px;
   }
 
   .header i {
@@ -312,7 +319,7 @@ a:hover, a {
     line-height: 0;
     transition: 0.5s;
     z-index: 9999;
-    margin: 12px 10px 10px 10px;
+    /* margin: 12px 10px 10px 10px; */
   }
 
   .mobile-nav-active {
@@ -328,13 +335,6 @@ a:hover, a {
     position: fixed;
     z-index: 9996;
   }
-}
-
-@media (max-width: 500px){
-  .mobile-nav-show {
-    margin: 10.5px 10px 10px 10px !important;
-  }
-
 }
 
 /*--------------------------------------------------------------
@@ -445,7 +445,7 @@ a:hover, a {
   
   @media (max-width: 1000px) {
     .banner h2 {
-      padding: 0 19% !important;
+      padding: 0 15% !important;
     }
   
     .banner p {
@@ -456,13 +456,13 @@ a:hover, a {
   
   @media (max-width: 662px) {
     .banner h2 {
-      font-size: 32px;
+      font-size: 29px;
       padding: 0 3% !important;
     }
   
     .banner p {
-      font-size: 15px;
-      padding: 0;
+      font-size: 16px;
+      padding: 0 1%;
     }
   }
   

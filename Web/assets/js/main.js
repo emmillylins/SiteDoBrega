@@ -21,7 +21,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
   /* Hide mobile nav on same-page/hash links */
   document.querySelectorAll('#navbar a').forEach(navbarlink => {
-
     if (!navbarlink.hash) return;
 
     let section = document.querySelector(navbarlink.hash);
@@ -66,8 +65,6 @@ document.addEventListener('DOMContentLoaded', () => {
     }));
   }
 });
-
-
 
 function popularNavbar(categorias) {
   const navbarUl = document.querySelector('#dynamic-navbar');
@@ -145,19 +142,15 @@ async function carregarCategoriaDesc(){
   const desc = localStorage.getItem('categoriaDesc');
   const span = document.getElementById('categoria-desc');
 
-
-
-  if (desc) {
-      span.textContent = desc.toUpperCase();
-  } else {
-      span.textContent = 'Unknown';
-  }  
+  if (desc) span.textContent = desc.toUpperCase();
+  else span.textContent = 'Unknown';  
 }
 
 async function carregarFaixas() {
   const categoriaId = localStorage.getItem('categoriaId');
-  if (categoriaId) {
-
+  
+  if (categoriaId) 
+  {
     getFaixas(categoriaId).then(faixas => {
       const gallery = document.getElementById('gallery');
       gallery.innerHTML = ''; // Limpa o conteúdo existente          
@@ -190,49 +183,120 @@ async function carregarFaixas() {
 
 async function dropdownCategorias() {
   try {
-      const categorias = await getCategorias(); // Aguarda a Promise ser resolvida
+    const categorias = await getCategorias();
 
+    // Verifica se categorias é um array e não está vazio
+    if (Array.isArray(categorias) && categorias.length > 0) 
+    {
       const selectCategoria = document.getElementById('categoria');
       selectCategoria.innerHTML = ''; // Limpa o dropdown antes de adicionar novas opções
 
       categorias.forEach(categoria => {
-          const option = document.createElement('option');
-          option.value = categoria.id;
-          option.textContent = categoria.desc;
-          selectCategoria.appendChild(option);
+        const option = document.createElement('option');
+        option.value = categoria.id;
+        option.textContent = categoria.desc;
+        selectCategoria.appendChild(option);
       });
+    } else {
+      console.warn('A lista de categorias está vazia ou não é um array válido.');
+    }
   } catch (error) {
-      console.error('Erro ao carregar categorias:', error);
+    console.error('Erro ao carregar categorias:', error);
   }
 }
 
+function inserirFaixas(event) {
+  event.preventDefault();
 
-//novo form
-function clonarForm() {
-  var formTemplate = document.getElementById('form-template');
-  var newForm = formTemplate.cloneNode(true);
+  const form = event.target;
+  const isValid = form.checkValidity();
 
-  // Clear the input values in the cloned form
-  var inputs = newForm.getElementsByTagName('input');
-  for (var i = 0; i < inputs.length; i++) {
-      inputs[i].value = '';
-  }
-  var textareas = newForm.getElementsByTagName('textarea');
-  for (var i = 0; i < textareas.length; i++) {
-      textareas[i].value = '';
-  }
-  var selects = newForm.getElementsByTagName('select');
-  for (var i = 0; i < selects.length; i++) {
-      selects[i].selectedIndex = 0;
-  }
-  
-  // Esconder botões do formulário superior se já não estiverem escondidos
-  var currentForm = document.querySelector('.form-container');
-  var buttons = currentForm.querySelector('.botao');
-  if (buttons) {
-      buttons.style.display = 'none';
+  clearErrorMessages(); // Limpa mensagens de erro anteriores
+
+  if (!isValid) {
+    showErrorMessages(); // Exibe mensagens de erro
+    return;
   }
 
-  // Append the cloned form to the section
-  document.getElementById('cadastro').appendChild(newForm);
+  const titulo = document.getElementById('titulo').value;
+  const artista = document.getElementById('artista').value;
+  const link = document.getElementById('link').value.replace(/height="(\d+)"/, 'height="152"');
+  const categoriaId = document.getElementById('categoria').value;
+  let nomeUsuario = document.getElementById('usuario').value;
+
+  if (!nomeUsuario) nomeUsuario = 'emmy';
+
+  const faixa = {
+      titulo: titulo,
+      artista: artista,
+      link: link,
+      categoriaId: parseInt(categoriaId, 10),
+      nomeUsuario: nomeUsuario
+  };
+
+  if (postFaixas(faixa)){
+    form.reset(); 
+  };
+}
+
+function clearErrorMessages() {
+  const errorMessages = document.querySelectorAll('.error-message');
+  errorMessages.forEach(function(message) {
+      message.textContent = '';
+  });
+
+  const fields = document.querySelectorAll('.form-control');
+  fields.forEach(function(field) {
+      field.classList.remove('touched');
+  });
+}
+
+function showErrorMessages() {
+  const fields = document.querySelectorAll('.form-control');
+  fields.forEach(function(field) {
+      if (!field.checkValidity()) {
+          const errorMessage = field.parentElement.querySelector('.error-message');
+          errorMessage.textContent = 'Este campo é obrigatório.';
+          field.classList.add('touched');
+      }
+  });
+}
+
+function addValidationEvents() {
+  document.querySelectorAll('.form-control, .form-select').forEach(function(field) {
+      field.addEventListener('blur', function() {
+          if (!field.checkValidity()) {
+              field.classList.add('touched');
+              const errorMessage = field.parentElement.querySelector('.error-message');
+              errorMessage.textContent = 'Este campo é obrigatório.';
+          } else {
+              field.classList.remove('touched');
+              const errorMessage = field.parentElement.querySelector('.error-message');
+              errorMessage.textContent = '';
+          }
+      });
+  });
+}
+
+function disableButton(){
+  const form = document.getElementById('form-template');
+  const submitBtn = document.getElementById('submit-btn');
+  const requiredInputs = form.querySelectorAll('input[required], textarea[required]');
+
+  function checkRequiredFields() {
+      let allFilled = true;
+      requiredInputs.forEach(input => {
+          if (input.value.trim() === "") {
+              allFilled = false;
+          }
+      });
+      submitBtn.disabled = !allFilled;
+  }
+
+  requiredInputs.forEach(input => {
+      input.addEventListener('input', checkRequiredFields);
+  });
+
+  // Initial check in case fields are pre-filled
+  checkRequiredFields();
 }

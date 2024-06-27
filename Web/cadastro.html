@@ -5,7 +5,7 @@
   <meta content="width=device-width, initial-scale=1.0" name="viewport">
   <meta name="theme-color">
 
-  <title>SiteDoBrega</title>
+  <title>Cadastro</title>
 
   <!-- Google Fonts -->
   <link href="https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,600;1,700&family=Inter:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600;1,700&family=Cardo:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
@@ -56,15 +56,17 @@
     <div class="text">
         <h2><span>Cadastro de breguinhas</span></h2>
     </div>
-    <form class="form-container" id="form-template">
+    <form class="form-container" id="form-template" novalidate>
         <div class="part-1">
             <div>
                 <label for="titulo" class="form-label">Título</label>
-                <input type="text" class="form-control" id="titulo" placeholder="ex.: Masoquista">
+                <input type="text" class="form-control" id="titulo" placeholder="ex.: Masoquista" required>
+                <small class="error-message" id="titulo-error"></small>
             </div>
             <div>
                 <label for="artista" class="form-label">Artista</label>
-                <input type="text" class="form-control" id="artista" placeholder="ex.: Mc Reino">
+                <input type="text" class="form-control" id="artista" placeholder="ex.: Mc Reino" required>
+                <small class="error-message" id="artista-error"></small>
             </div>
         </div>
         <div class="part-2">
@@ -82,11 +84,12 @@
         </div>
         <div>
             <label for="link" class="form-label">Link</label>
-            <textarea class="form-control" id="link" rows="5" placeholder="iframe style='' src='' width='' height='' frameBorder='' allowfullscreen='' allow='' loading=''/iframe>"></textarea>
-        </div>
+            <textarea class="form-control" id="link" rows="5" required placeholder="iframe style='' src='' width='' height='' frameBorder='' allowfullscreen='' allow='' loading=''/iframe>"></textarea>
+            <small class="error-message" id="link-error"></small>
+          </div>
         <div class="botao">
-            <button type="submit">Cadastrar</button>
-            <button type="button" id="add-form">+</button>
+            <button type="submit" id="submit-btn" disabled>Cadastrar</button>
+            <!-- <button type="button" id="add-form">+</button> -->
         </div>
     </form>
   </section>
@@ -116,9 +119,10 @@
         const categorias = await getCategorias();
         popularNavbar(categorias);
         dropdownCategorias();
-
-        // document.getElementById('add-form').addEventListener('click', clonarForm);
-        document.getElementById('form-template').addEventListener('submit', postFaixas);
+        disableButton();
+        addValidationEvents();
+        
+        document.getElementById('form-template').addEventListener('submit', inserirFaixas);
       }
       document.addEventListener('DOMContentLoaded', init);
    </script>

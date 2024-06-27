@@ -70,23 +70,7 @@ async function getCategorias() {
     }
 }
 
-function postFaixas(event) {
-  event.preventDefault();
-
-  const titulo = document.getElementById('titulo').value;
-  const artista = document.getElementById('artista').value;
-  const link = document.getElementById('link').value;
-  const categoriaId = document.getElementById('categoria').value;
-  const nomeUsuario = document.getElementById('usuario').value;
-
-  const faixa = {
-    titulo: titulo,
-    artista: artista,
-    link: link,
-    categoriaId: parseInt(categoriaId, 10),
-    nomeUsuario: nomeUsuario
-  };
-
+function postFaixas(faixa) {
   const data = [faixa];
 
   fetch('https://localhost:5000/api/faixas', {
@@ -98,9 +82,17 @@ function postFaixas(event) {
   })
   .then(response => response.json())
   .then(data => {
-      console.log('Success:', data);
+      console.log(data);
+      if (data.success){
+        alert('Inserção bem sucedida!');
+        return true;
+      }
+      else {        
+        alert(data.errors);
+        return false;
+      }      
   })
   .catch((error) => {
-      console.error('Error:', error);
+      alert('Error:', error);
   });
 }

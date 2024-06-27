@@ -27,11 +27,11 @@ namespace Application.Services
             {
                 var entities = _repository.Select().ToList();
 
-                entities.ForEach(entity =>
-                {
-                    entity.Usuario = _repository.GetUsuarios().First(p => p.NomeUsuario == entity.NomeUsuario);
-                    entity.Categoria = _repository.GetCategorias().First(p => p.Id == entity.CategoriaId);
-                });
+                //entities.ForEach(entity =>
+                //{
+                //    entity.Usuario = _repository.GetUsuarios().First(p => p.NomeUsuario == entity.NomeUsuario);
+                //    entity.Categoria = _repository.GetCategorias().First(p => p.Id == entity.CategoriaId);
+                //});
 
                 var outputModels = entities.Select(s => _mapper.Map<TOutputModel>(s));
                 return outputModels;
@@ -109,8 +109,8 @@ namespace Application.Services
 
                 if (!result.IsValid)
                 {
-                    var errors = result.Errors.Select(error => new { Property = error.PropertyName, Message = error.ErrorMessage });
-                    var errorString = string.Join(", ", errors);
+                    var errors = result.Errors.Select(error => new string(error.ErrorMessage));
+                    var errorString = string.Join(Environment.NewLine, errors);
 
                     throw new Exception(errorString);
                 }

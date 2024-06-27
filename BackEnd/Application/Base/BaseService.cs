@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using Domain.Entities;
 using FluentValidation;
 using Infrastructure.Base;
 

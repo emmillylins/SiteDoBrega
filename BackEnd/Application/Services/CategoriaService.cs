@@ -109,8 +109,8 @@ namespace Application.Services
 
                 if (!result.IsValid)
                 {
-                    var errors = result.Errors.Select(error => new { Property = error.PropertyName, Message = error.ErrorMessage });
-                    var errorString = string.Join(", ", errors);
+                    var errors = result.Errors.Select(error => new string(error.ErrorMessage));
+                    var errorString = string.Join(Environment.NewLine, errors);
 
                     throw new Exception(errorString);
                 }

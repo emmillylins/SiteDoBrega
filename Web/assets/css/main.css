@@ -494,6 +494,12 @@ a:hover, a {
     color: #688d38;
   }
 
+  @media (max-width: 1000px){
+    .footer {
+      margin-top: 5rem !important;
+      padding: 1.5rem;
+    }
+  }
   
   /*--------------------------------------------------------------
   # Scroll top button

@@ -105,3 +105,32 @@ button:disabled {
    background-color: #688d3894; 
     cursor: default;  
 }
+
+/* mobile style */
+@media (max-width: 900px) {
+    .text {
+        margin: 5rem 0 2rem;
+    }
+}
+
+@media (max-width: 700px) {
+
+    .form-container {
+        margin: 20px;
+    }
+
+    .form-container .part-1,
+    .form-container .part-2 {
+        display: block;
+    }
+
+    .botao {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .botao button {
+        width: 60%;
+    }
+}

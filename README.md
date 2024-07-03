@@ -10,3 +10,7 @@ O SiteDoBrega é um projeto pessoal muito querido que se propõe a indicar todos
   - Web ASP.NET Core, Swagger
 - Base de dados: SQL Server
 - Front end: HTML, CSS e JavaScript
+
+### Melhorias futuras
+- API online 
+- MongoDb

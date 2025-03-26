@@ -1,0 +1,136 @@
+/* style.css */
+
+.text {
+    margin: 5% 0 3%;  
+    text-align: center;
+}
+
+.text h2 {
+    color: #fff;
+    font-size: 25px;
+    text-transform: uppercase;    
+    text-shadow: 2px 1px 3px #0f0f0fd0;
+}
+
+.form-container {
+    max-width: 600px;
+    margin: 0 auto 2%; 
+}
+
+.form-container .part-2 {
+    display: grid;
+    gap: 10px;
+    grid-template-columns: 2fr 1fr;
+}
+
+.form-container .part-1 {
+    display: grid;
+    gap: 10px;
+    grid-template-columns: 1fr 1fr;
+}
+
+.form-container label {
+    font-size: 15px;
+    margin: 20px 0 5px 2px;
+    color: #fff;
+}
+
+.form-container input, 
+.form-container textarea, 
+.form-container select {
+    padding: 10px;
+    font-size: 14px;
+    background-color: #161718;
+    border: 1px solid #2e3133;
+    border-radius: 4px;
+    width: 100%;
+    color: #fff;
+    box-sizing: border-box;
+}
+
+.form-container select {
+    cursor: pointer;
+}
+
+/* Cor do input ao focar */
+.form-container input:focus,
+.form-container textarea:focus,
+.form-container select:focus {   
+    color: #fff; 
+    background-color: #161718;
+    border: 1px solid #2e3133;
+    outline: none; 
+}
+
+.form-container input::placeholder,
+.form-container textarea::placeholder {
+    color: #bebebe; 
+}
+
+.form-container textarea {
+    resize: vertical;
+}
+
+.form-container .botao {
+    margin-top: 15px;
+    text-align: right;
+}
+
+.form-container button {
+    padding: 10px 20px;
+    font-size: 15px;
+    background: #688d38;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.footer {
+    margin-top: 5%;
+}
+
+input:invalid.touched,
+textarea:invalid.touched {
+    border: 1px solid rgb(124, 0, 0);
+}
+
+.error-message {
+    color: rgb(168, 0, 0);
+    font-size: 0.8em;
+    margin-top: 5px;
+}
+
+button:disabled {
+   background-color: #688d3894; 
+    cursor: default;  
+}
+
+/* mobile style */
+@media (max-width: 900px) {
+    .text {
+        margin: 5rem 0 2rem;
+    }
+}
+
+@media (max-width: 700px) {
+
+    .form-container {
+        margin: 20px;
+    }
+
+    .form-container .part-1,
+    .form-container .part-2 {
+        display: block;
+    }
+
+    .botao {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .botao button {
+        width: 60%;
+    }
+}

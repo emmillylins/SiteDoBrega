@@ -16,9 +16,6 @@ namespace Domain.Validators
                 .MaximumLength(500).WithMessage("O campo '{PropertyName}' deve ter até {MaxLength} caracteres.");
 
             RuleFor(x => x.UsuarioId).NotNull().NotEmpty().WithMessage("O campo '{PropertyName}' é obrigatório.");
-
-            RuleFor(x => x.CategoriaId).NotNull().WithMessage("O campo '{PropertyName}' é obrigatório.")
-                .GreaterThan(0).WithMessage("Categoria inválida.");
         }
     }
 }

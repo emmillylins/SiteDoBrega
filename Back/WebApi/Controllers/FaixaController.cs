@@ -55,7 +55,7 @@ namespace WebApi.Controllers
         {
             try
             {
-                _service.Delete(id);
+                await _service.DeleteAsync(id);
                 return CustomResponse();
             }
             catch (Exception ex)
@@ -88,7 +88,7 @@ namespace WebApi.Controllers
             {
                 if (!ModelState.IsValid) return CustomResponse(ModelState);
                 //var username = HttpContext.User.Identity.Name;
-                var result = _service.Update<FaixaDTO, FaixaDTO, FaixaValidator>(DTO);
+                var result = await _service.UpdateAsync<FaixaDTO, FaixaDTO, FaixaValidator>(DTO);
                 return CustomResponse(result);
             }
             catch (Exception ex)

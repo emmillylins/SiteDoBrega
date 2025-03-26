@@ -34,21 +34,18 @@ namespace Application.Services
             _context = context;
         }
 
-        public async Task<List<ApplicationUserDTO>> GetUsersAsync()
+        public async Task<object> GetUsersAsync()
         {
             try
             {
                 var entities = await _repository.SelectAsync();
 
-                var users = entities.Select(entity => new ApplicationUserDTO
+                var users = entities.Select(entity => new
                 {
-                    Id = entity.Id,
-                    Email = entity.Email ?? string.Empty,
-                    NomeUsuario = entity.UserName ?? string.Empty,
-                    Cpf = entity.Cpf,
-                    Nome = entity.NormalizedUserName,
-                    DataNasc = entity.DataNasc,
-                    TipoUsuario = entity.TipoUsuario
+                    entity.Id,
+                    NomeUsuario = entity.UserName,
+                    entity.Nome,
+                    entity.TipoUsuario
                 }).ToList();
 
                 return users;
@@ -56,7 +53,7 @@ namespace Application.Services
             catch (Exception) { throw; }
         }
 
-        public async Task<ApplicationUserDTO> Login(LoginDTO login)
+        public async Task<object> Login(LoginDTO login)
         {
             try
             {
@@ -87,18 +84,12 @@ namespace Application.Services
 
                     await _context.SaveChangesAsync();
 
-                    return new ApplicationUserDTO()
+                    return new
                     {
-                        Id = user.Id,
-                        Email = login.Email,
-                        NomeUsuario = user.UserName,
-                        Cpf = user.Cpf,
-                        Nome = user.NormalizedUserName,
-                        DataNasc = user.DataNasc,
-                        TipoUsuario = user.TipoUsuario,
+                        Token = token
                     };
                 }
-                else throw new Exception("Erro no login.");
+                else throw new Exception("Senha incorreta.");
             }
             catch (Exception) { throw; }
         }
@@ -139,7 +130,7 @@ namespace Application.Services
                 if (existingUser != null) throw new ConflictException("E-mail já cadastrado.");
 
                 // Criação do objeto ApplicationUser com os dados fornecidos
-                var user = new ApplicationUser(dto.Cpf, dto.DataNasc, dto.TipoUsuario)
+                var user = new ApplicationUser(dto.Cpf, dto.DataNasc, dto.Nome, dto.TipoUsuario)
                 {
                     UserName = dto.NomeUsuario,
                     Email = dto.Email, 
@@ -158,7 +149,7 @@ namespace Application.Services
                 else
                 {
                     // Retorna os erros de criação
-                    throw new Exception(string.Join(", ", result.Errors.Select(e => e.Description)));
+                    throw new Exception(string.Join("\n", result.Errors.Select(e => e.Description)));
                 }
             }
             catch (Exception ex)

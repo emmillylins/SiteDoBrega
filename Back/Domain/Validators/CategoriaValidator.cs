@@ -7,7 +7,6 @@ namespace Domain.Validators
     {
         public CategoriaValidator()
         {
-            RuleFor(x => x.Id).GreaterThan(0);
             RuleFor(x => x.Desc).NotNull().NotEmpty().WithMessage("O campo '{PropertyName}' é obrigatório.")
                 .MaximumLength(30).WithMessage("O campo '{PropertyName}' deve ter até {MaxLength} caracteres.");
             RuleFor(x => x.Url).NotNull().NotEmpty().WithMessage("O campo '{PropertyName}' é obrigatório.")

@@ -4,7 +4,7 @@
     {
         public Faixa() { }
 
-        public Faixa(string? titulo, string? artista, string link, int categoriaId, int usuarioId)
+        public Faixa(string? titulo, string? artista, string link, int categoriaId, string usuarioId)
         {
             Titulo = titulo;
             Artista = artista;
@@ -18,7 +18,7 @@
         public string? Artista { get; set; }
         public string Link { get; set; }
         public int CategoriaId { get; set; }
-        public int UsuarioId { get; set; }
+        public string UsuarioId { get; set; }
 
         public Categoria Categoria { get; set; }
         public ApplicationUser Usuario { get; set; }

@@ -9,7 +9,7 @@ using WebApi.Controllers.Main;
 namespace WebApi.Controllers
 {
     [ApiController]
-    [Route("api/Categorias")]
+    [Route("api/categorias")]
     public class CategoriaController : MainController
     {
         private readonly ICategoriaService _service;
@@ -55,7 +55,7 @@ namespace WebApi.Controllers
         {
             try
             {
-                _service.Delete(id);
+                await _service.DeleteAsync(id);
                 return CustomResponse();
             }
             catch (Exception ex)
@@ -88,7 +88,7 @@ namespace WebApi.Controllers
             {
                 if (!ModelState.IsValid) return CustomResponse(ModelState);
                 //var username = HttpContext.User.Identity.Name;
-                var result = _service.Update<CategoriaDTO, CategoriaDTO, CategoriaValidator>(DTO);
+                var result = await _service.UpdateAsync<CategoriaDTO, CategoriaDTO, CategoriaValidator>(DTO);
                 return CustomResponse(result);
             }
             catch (Exception ex)

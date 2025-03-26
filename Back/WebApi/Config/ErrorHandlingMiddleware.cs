@@ -68,13 +68,12 @@ namespace WebApi.Config
                         await _next(context);
                         return;
                     }
-                }
-
-                //if (authService.AllowsAnonymousRoute(endpoint))
-                //{
-                //    await _next(context);
-                //    return;
-                //}
+                    else if (authService.AllowsAnonymousRoute(endpoint))
+                    {
+                        await _next(context);
+                        return;
+                    }
+                }                
 
                 try
                 {

@@ -5,6 +5,7 @@ using Domain.Entities;
 using FluentValidation;
 using Infrastructure.Context;
 using Infrastructure.Interfaces;
+using Microsoft.EntityFrameworkCore;
 
 namespace Application.Services
 {
@@ -75,55 +76,66 @@ namespace Application.Services
             }
         }
 
-        public TOutputModel Update<TInputModel, TOutputModel, TValidator>(TInputModel inputModel)
-            where TInputModel : class
-            where TOutputModel : class
-            where TValidator : AbstractValidator<Faixa>
+        public async Task<TOutputModel> UpdateAsync<TInputModel, TOutputModel, TValidator>(TInputModel inputModel)
+                  where TInputModel : class
+                  where TOutputModel : class
+                  where TValidator : AbstractValidator<Faixa>
         {
-            using var transaction = _context.Database.BeginTransaction();
-            try
+            var strategy = _context.Database.CreateExecutionStrategy();
+
+            return await strategy.ExecuteAsync(async () =>
             {
-                // Mapeamento da entidade
-                var entity = _mapper.Map<Faixa>(inputModel) ?? throw new Exception("Erro de mapping.");
+                await using var transaction = await _context.Database.BeginTransactionAsync();
+                try
+                {
+                    // Mapeamento da entidade
+                    var entity = _mapper.Map<Faixa>(inputModel) ?? throw new Exception("Erro de mapeamento.");
 
-                Validation<TValidator>(entity);
+                    Validation<TValidator>(entity);
 
-                // Atualizar a entidade
-                _repository.Update(entity);
-                _context.SaveChanges();
+                    // Atualizar a entidade
+                    _repository.Update(entity);
+                    await _context.SaveChangesAsync();
 
-                transaction.Commit();
+                    await transaction.CommitAsync();
 
-                // Mapear o resultado para o modelo de saída
-                var outputModel = _mapper.Map<TOutputModel>(entity);
-                return outputModel;
-            }
-            catch (Exception)
-            {
-                transaction.Rollback();
-                throw;
-            }
+                    // Mapear o resultado para o modelo de saída
+                    var outputModel = _mapper.Map<TOutputModel>(entity);
+                    return outputModel;
+                }
+                catch (Exception)
+                {
+                    await transaction.RollbackAsync();
+                    throw;
+                }
+            });
         }
 
-        public void Delete(int id)
+        public async Task DeleteAsync(int id)
         {
-            using var transaction = _context.Database.BeginTransaction();
-            try
-            {
-                var entity = _repository.Select(id) ?? throw new NotFoundException("Registro não existe na base de dados.");
+            var strategy = _context.Database.CreateExecutionStrategy();
 
-                _repository.Delete(entity);
-                _context.SaveChanges();
-
-                // Commit da transação
-                transaction.Commit();
-            }
-            catch (Exception)
+            await strategy.ExecuteAsync(async () =>
             {
-                // Rollback em caso de erro
-                transaction.Rollback();
-                throw;
-            }
+                await using var transaction = await _context.Database.BeginTransactionAsync();
+                try
+                {
+                    var entity = await _repository.SelectAsync(id)
+                        ?? throw new NotFoundException("Registro não existe na base de dados.");
+
+                    _repository.Delete(entity);
+                    await _context.SaveChangesAsync();
+
+                    // Commit da transação
+                    await transaction.CommitAsync();
+                }
+                catch
+                {
+                    // Rollback em caso de erro
+                    await transaction.RollbackAsync();
+                    throw;
+                }
+            });
         }
 
         #region métodos auxiliares

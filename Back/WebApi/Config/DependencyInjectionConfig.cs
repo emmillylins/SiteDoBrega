@@ -22,7 +22,8 @@ namespace WebApi.Config
             services.AddScoped<INotificador, Notificador>();
             services.AddScoped(typeof(IBaseRepository<>), typeof(BaseRepository<>));
 
-            services.AddScoped<IUsuarioService, UsuarioService>();
+            services.AddScoped<IFaixaService, FaixaService>();
+            services.AddScoped<ICategoriaService, CategoriaService>();
             services.AddScoped<IAuthService, AuthService>();
             services.AddScoped<AuthService>();
 

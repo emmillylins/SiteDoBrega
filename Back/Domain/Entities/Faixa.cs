@@ -21,6 +21,6 @@
         public int UsuarioId { get; set; }
 
         public Categoria Categoria { get; set; }
-        public Usuario Usuario { get; set; }
+        public ApplicationUser Usuario { get; set; }
     }
 }

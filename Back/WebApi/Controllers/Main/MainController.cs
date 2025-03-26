@@ -2,7 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using Infrastructure.Notifications;
 
-namespace WebApi.Controllers
+namespace WebApi.Controllers.Main
 {
     [ApiController]
     public abstract class MainController : ControllerBase

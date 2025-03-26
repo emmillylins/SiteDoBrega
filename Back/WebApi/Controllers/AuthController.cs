@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Application.Interfaces;
 using Application.DTOs;
+using WebApi.Controllers.Main;
 
 namespace WebApi.Controllers
 {
@@ -54,7 +55,7 @@ namespace WebApi.Controllers
 
         [AllowAnonymous]
         [HttpPost("cadastro")]
-        public async Task<ActionResult> Cadastro([FromBody] RegisterDTO register)
+        public async Task<ActionResult> Cadastro([FromBody] CreateApplicationUserDTO register)
         {
             try
             {

@@ -13,6 +13,7 @@ using Microsoft.AspNetCore.Authorization;
 using Infrastructure.Context;
 using Microsoft.EntityFrameworkCore;
 using Application.DTOs;
+using Application.Exceptions;
 
 namespace Application.Services
 {
@@ -33,16 +34,29 @@ namespace Application.Services
             _context = context;
         }
 
-        public async Task<List<ApplicationUser>> GetUsersAsync()
+        public async Task<List<ApplicationUserDTO>> GetUsersAsync()
         {
             try
             {
-                return await _repository.SelectAsync();
+                var entities = await _repository.SelectAsync();
+
+                var users = entities.Select(entity => new ApplicationUserDTO
+                {
+                    Id = entity.Id,
+                    Email = entity.Email ?? string.Empty,
+                    NomeUsuario = entity.UserName ?? string.Empty,
+                    Cpf = entity.Cpf,
+                    Nome = entity.NormalizedUserName,
+                    DataNasc = entity.DataNasc,
+                    TipoUsuario = entity.TipoUsuario
+                }).ToList();
+
+                return users;
             }
             catch (Exception) { throw; }
         }
 
-        public async Task<Usuario> Login(LoginDTO login)
+        public async Task<ApplicationUserDTO> Login(LoginDTO login)
         {
             try
             {
@@ -73,10 +87,15 @@ namespace Application.Services
 
                     await _context.SaveChangesAsync();
 
-                    return new Usuario()
+                    return new ApplicationUserDTO()
                     {
+                        Id = user.Id,
+                        Email = login.Email,
+                        NomeUsuario = user.UserName,
+                        Cpf = user.Cpf,
+                        Nome = user.NormalizedUserName,
+                        DataNasc = user.DataNasc,
                         TipoUsuario = user.TipoUsuario,
-                        NomeUsuario = user.UserName ?? ""
                     };
                 }
                 else throw new Exception("Erro no login.");
@@ -111,24 +130,24 @@ namespace Application.Services
             }
         }
 
-        public async Task<string> Register(RegisterDTO registerModel)
+        public async Task<string> Register(CreateApplicationUserDTO dto)
         {
             try
             {
                 // Verifica se o e-mail já está em uso
-                var existingUser = await _userManager.FindByEmailAsync(registerModel.Email);
-                if (existingUser != null) throw new Exception("E-mail já cadastrado.");
+                var existingUser = await _userManager.FindByEmailAsync(dto.Email);
+                if (existingUser != null) throw new ConflictException("E-mail já cadastrado.");
 
                 // Criação do objeto ApplicationUser com os dados fornecidos
-                var user = new ApplicationUser(registerModel.TipoUsuario)
+                var user = new ApplicationUser(dto.Cpf, dto.DataNasc, dto.TipoUsuario)
                 {
-                    UserName = registerModel.UserName,
-                    Email = registerModel.Email, 
+                    UserName = dto.NomeUsuario,
+                    Email = dto.Email, 
                     EmailConfirmed = true // Considera o e-mail automaticamente confirmado
                 };
 
                 // Cria o usuário no banco de dados
-                var result = await _userManager.CreateAsync(user, registerModel.Password);
+                var result = await _userManager.CreateAsync(user, dto.Senha);
 
                 // Verifica se houve sucesso na criação
                 if (result.Succeeded)
@@ -149,6 +168,7 @@ namespace Application.Services
             }
         }
 
+        #region Métodos auxiliares
         public async Task<string> GerarJwt(ApplicationUser user)
         {
             // 1. Definir as claims do token
@@ -193,5 +213,6 @@ namespace Application.Services
 
             return allowAnonymousAttribute != null;
         }
+        #endregion
     }
 }

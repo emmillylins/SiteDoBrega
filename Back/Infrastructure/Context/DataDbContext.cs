@@ -19,7 +19,7 @@ namespace Infrastructure.Context
             builder = productSeed.Seed(builder);
 
             // Configure Identity tables if necessary
-            builder.Entity<ApplicationUser>().ToTable("AspNetUsers").HasKey(x => x.Id);
+            //builder.Entity<ApplicationUser>().ToTable("AspNetUsers").HasKey(x => x.Id);
             builder.Entity<IdentityRole>().ToTable("AspNetRole").HasKey(x => x.Id);
 
             builder.Entity<IdentityUserClaim<string>>().ToTable("AspNetUserClaim").HasNoKey();
@@ -27,7 +27,9 @@ namespace Infrastructure.Context
             builder.Entity<IdentityRoleClaim<string>>().ToTable("AspNetRoleClaim").HasNoKey();
 
             builder.Entity<IdentityUserRole<string>>().ToTable("AspNetUserRole").HasKey(ur => new { ur.UserId, ur.RoleId });
+
             builder.Entity<ApplicationUserToken>().ToTable("AspNetUserToken").HasKey(t => new { t.UserId, t.CreationDate, t.Value });
+            builder.Entity<ApplicationUserToken>().Property(t => t.Value).HasColumnType("varchar(500)").IsRequired();
 
             base.OnModelCreating(builder);
 
@@ -37,7 +39,6 @@ namespace Infrastructure.Context
                     .Where(p => p.ClrType == typeof(string))))
                 property.SetColumnType("varchar(100)");
 
-            builder.Entity<ApplicationUserToken>().Property(t => t.Value).HasColumnType("varchar(500)").IsRequired();
 
             foreach (var relationship in builder.Model.GetEntityTypes().SelectMany(p => p.GetForeignKeys()))
                 relationship.DeleteBehavior = DeleteBehavior.ClientSetNull;

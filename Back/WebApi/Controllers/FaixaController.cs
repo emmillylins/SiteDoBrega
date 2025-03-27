@@ -4,6 +4,7 @@ using Domain.Validators;
 using Infrastructure.Notifications;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Data.SqlClient;
 using WebApi.Controllers.Main;
 
 namespace WebApi.Controllers
@@ -19,29 +20,13 @@ namespace WebApi.Controllers
         }
 
         [AllowAnonymous]
-        [HttpGet]
-        public async Task<ActionResult> Listar()
+        [HttpGet("{categoriaId}")]
+        public async Task<ActionResult> Obter(int categoriaId)
         {
             try
             {
                 if (!ModelState.IsValid) return CustomResponse(ModelState);
-                return CustomResponse(await _service.GetAsync<FaixaDTO>());
-            }
-            catch (Exception ex)
-            {
-                NotificarErro(ex.Message);
-                return CustomResponse();
-            }
-        }
-
-        [AllowAnonymous]
-        [HttpGet("{id}")]
-        public async Task<ActionResult> Obter(int id)
-        {
-            try
-            {
-                if (!ModelState.IsValid) return CustomResponse(ModelState);
-                return CustomResponse(await _service.GetAsync<FaixaDTO>(id));
+                return CustomResponse(await _service.GetAsync<FaixaDTO>(categoriaId));
             }
             catch (Exception ex)
             {
@@ -60,11 +45,13 @@ namespace WebApi.Controllers
             }
             catch (Exception ex)
             {
+                if (ex is SqlException) NotificarErro(ex.InnerException?.Message ?? string.Empty);
                 NotificarErro(ex.Message);
                 return CustomResponse();
             }
         }
 
+        [AllowAnonymous]
         [HttpPost]
         public async Task<ActionResult> Inserir(CreateFaixaDTO DTO)
         {
@@ -76,6 +63,7 @@ namespace WebApi.Controllers
             }
             catch (Exception ex)
             {
+                if (ex is SqlException) NotificarErro(ex.InnerException?.Message ?? string.Empty);
                 NotificarErro(ex.Message);
                 return CustomResponse();
             }
@@ -93,6 +81,7 @@ namespace WebApi.Controllers
             }
             catch (Exception ex)
             {
+                if (ex is SqlException) NotificarErro(ex.InnerException?.Message ?? string.Empty);
                 NotificarErro(ex.Message);
                 return CustomResponse();
             }

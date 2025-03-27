@@ -5,6 +5,7 @@ using Domain.Entities;
 using FluentValidation;
 using Infrastructure.Context;
 using Infrastructure.Interfaces;
+using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
 
 namespace Application.Services
@@ -34,7 +35,19 @@ namespace Application.Services
             catch (Exception) { throw; }
         }
 
-        public async Task<TOutputModel> GetAsync<TOutputModel>(int id) where TOutputModel : class
+        public async Task<IEnumerable<TOutputModel>> GetAsync<TOutputModel>(int categoriaId) where TOutputModel : class
+        {
+            try
+            {
+                var entities = await _repository.SelectAsync();
+
+                var outputModels = entities.Where(e => e.CategoriaId == categoriaId).Select(_mapper.Map<TOutputModel>);
+                return outputModels;
+            }
+            catch (Exception) { throw; }
+        }
+
+        public async Task<TOutputModel> GetByIdAsync<TOutputModel>(int id) where TOutputModel : class
         {
             try
             {
@@ -51,29 +64,34 @@ namespace Application.Services
             where TOutputModel : class
             where TValidator : AbstractValidator<Faixa>
         {
-            using var transaction = await _context.Database.BeginTransactionAsync();
-            try
+            var strategy = _context.Database.CreateExecutionStrategy();
+
+            return await strategy.ExecuteAsync(async () =>
             {
-                var entity = _mapper.Map<Faixa>(inputModel);
-                Validation<TValidator>(entity);
+                using var transaction = await _context.Database.BeginTransactionAsync();
+                try
+                {
+                    var entity = _mapper.Map<Faixa>(inputModel);
+                    Validation<TValidator>(entity);
 
-                var faixas = await _repository.SelectAsync();
+                    var faixas = await _repository.SelectAsync();
 
-                // Inserir nova Faixa
-                await _repository.InsertAsync(entity);
-                await _context.SaveChangesAsync();
+                    // Inserir nova Faixa
+                    await _repository.InsertAsync(entity);
+                    await _context.SaveChangesAsync();
 
-                // Commit da transação
-                await transaction.CommitAsync();
+                    // Commit da transação
+                    await transaction.CommitAsync();
 
-                var outputModel = _mapper.Map<TOutputModel>(entity);
-                return outputModel;
-            }
-            catch (Exception)
-            {
-                await transaction.RollbackAsync();
-                throw;
-            }
+                    var outputModel = _mapper.Map<TOutputModel>(entity);
+                    return outputModel;
+                }
+                catch (Exception)
+                {
+                    await transaction.RollbackAsync();
+                    throw;
+                }
+            });
         }
 
         public async Task<TOutputModel> UpdateAsync<TInputModel, TOutputModel, TValidator>(TInputModel inputModel)

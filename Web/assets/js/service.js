@@ -4,7 +4,7 @@ async function getFaixas(categoriaId) {
     // Simulação de uma requisição assíncrona
     await new Promise(resolve => setTimeout(resolve, 1000));
 
-    const url = `https://localhost:5000/api/faixas/por-categoria/${categoriaId}`;
+    const url = `https://localhost:5000/api/faixas/${categoriaId}`;
 
     const response = await fetch(url);
     const result = await response.json();

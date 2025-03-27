@@ -1,9 +1,11 @@
 ﻿using Application.DTOs;
+using Application.Exceptions;
 using Application.Interfaces;
 using Domain.Validators;
 using Infrastructure.Notifications;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Data.SqlClient;
 using WebApi.Controllers.Main;
 
 namespace WebApi.Controllers
@@ -60,6 +62,7 @@ namespace WebApi.Controllers
             }
             catch (Exception ex)
             {
+                if (ex is SqlException) NotificarErro(ex.InnerException?.Message ?? string.Empty);
                 NotificarErro(ex.Message);
                 return CustomResponse();
             }
@@ -76,6 +79,7 @@ namespace WebApi.Controllers
             }
             catch (Exception ex)
             {
+                if (ex is SqlException) NotificarErro(ex.InnerException?.Message ?? string.Empty);
                 NotificarErro(ex.Message);
                 return CustomResponse();
             }
@@ -93,6 +97,7 @@ namespace WebApi.Controllers
             }
             catch (Exception ex)
             {
+                if (ex is SqlException) NotificarErro(ex.InnerException?.Message ?? string.Empty);
                 NotificarErro(ex.Message);
                 return CustomResponse();
             }

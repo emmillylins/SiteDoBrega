@@ -7,7 +7,7 @@
         public string? Artista { get; set; }
         public string Link { get; set; }
         public int CategoriaId { get; set; }
-        public int UsuarioId { get; set; }
+        public string UsuarioId { get; set; }
     }
     public class CreateFaixaDTO
     {
@@ -15,6 +15,6 @@
         public string? Artista { get; set; }
         public string Link { get; set; }
         public int CategoriaId { get; set; }
-        public int UsuarioId { get; set; }
+        public string UsuarioId { get; set; }
     }
 }

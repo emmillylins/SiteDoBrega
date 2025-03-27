@@ -205,7 +205,7 @@ async function dropdownCategorias() {
   }
 }
 
-function inserirFaixas(event) {
+async function inserirFaixas(event) {
   event.preventDefault();
 
   const form = event.target;
@@ -222,22 +222,28 @@ function inserirFaixas(event) {
   const artista = document.getElementById('artista').value;
   const link = document.getElementById('link').value.replace(/height="(\d+)"/, 'height="152"');
   const categoriaId = document.getElementById('categoria').value;
-  let nomeUsuario = document.getElementById('usuario').value;
-
-  if (!nomeUsuario) nomeUsuario = 'emmy';
+  
+  let usuarioId = document.getElementById('usuario').value;
+  if (!usuarioId) usuarioId = 'aae0b75e-ef82-4ed2-b45e-02de53ab4c61';
 
   const faixa = {
       titulo: titulo,
       artista: artista,
       link: link,
       categoriaId: parseInt(categoriaId, 10),
-      nomeUsuario: nomeUsuario
+      usuarioId: usuarioId
   };
 
-  if (postFaixas(faixa)){
-    form.reset(); 
-  };
+  try {
+    const success = await postFaixas(faixa); // Aguarda a resposta da requisição
+    if (success) {
+      form.reset(); 
+    }
+  } catch (error) {
+    console.error('Erro ao inserir faixa:', error);
+  }
 }
+
 
 function clearErrorMessages() {
   const errorMessages = document.querySelectorAll('.error-message');

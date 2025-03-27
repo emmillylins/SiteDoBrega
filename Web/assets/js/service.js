@@ -33,8 +33,8 @@ async function getCategoriaById(id) {
       const result = await response.json();
 
       if (result.success) {
-        result.data
-          if (result.data.url != "#") result.data.url = result.data.url + '.html';
+        // if (result.data.url != "#") result.data.url = result.data.url + '.html';
+        if (result.data.url != "#") result.data.url = 'categoria.html'
         return result.data;
       } 
       else {
@@ -55,7 +55,8 @@ async function getCategorias() {
 
       if (result.success) {
         result.data.forEach(categoria => {
-          if (categoria.url != "#") categoria.url = categoria.url + '.html';
+          // if (categoria.url != "#") categoria.url = categoria.url + '.html';
+          if (categoria.url != "#") categoria.url = 'categoria.html'
         });
         return result.data;
       } 
@@ -70,29 +71,28 @@ async function getCategorias() {
     }
 }
 
-function postFaixas(faixa) {
-  const data = [faixa];
-
-  fetch('https://localhost:5000/api/faixas', {
+async function postFaixas(faixa) {
+  try {
+    const response = await fetch('https://localhost:5000/api/faixas', {
       method: 'POST',
       headers: {
-          'Content-Type': 'application/json'
+        'Content-Type': 'application/json'
       },
-      body: JSON.stringify(data)
-  })
-  .then(response => response.json())
-  .then(data => {
-      console.log(data);
-      if (data.success){
-        alert('Inserção bem sucedida!');
-        return true;
-      }
-      else {        
-        alert(data.errors);
-        return false;
-      }      
-  })
-  .catch((error) => {
-      alert('Error:', error);
-  });
+      body: JSON.stringify(faixa)
+    });
+
+    const data = await response.json();
+    console.log(data);
+
+    if (data.success) {
+      alert('Inserção bem sucedida!');
+      return true;
+    } else {
+      alert(JSON.stringify(data.errors));
+      return false;
+    }
+  } catch (error) {
+    alert('Erro: ' + error);
+    return false;
+  }
 }

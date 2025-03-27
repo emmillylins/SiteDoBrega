@@ -1,0 +1,109 @@
+/* style.css */
+
+.form-container {
+    max-width: 350px;
+    margin: 0 auto 2%; 
+}
+
+.form-container .text {
+    margin: 25% 3% 10%;      
+    text-align: center;
+}
+
+.form-container .text h2 {
+    color: #fff;
+    font-size: 25px;
+    text-shadow: 2px 1px 3px #0f0f0fd0;
+}
+
+.form-container label,
+p {
+    font-size: 15px;
+    margin: 20px 0 5px 2px;
+    color: #fff;
+}
+
+p {
+    text-align: center;
+}
+
+p a {
+    color:#688d38;
+}
+
+.form-container input {
+    padding: 10px;
+    font-size: 14px;
+    background-color: #161718;
+    border: 1px solid #2e3133;
+    border-radius: 4px;
+    width: 100%;
+    color: #fff;
+    box-sizing: border-box;
+}
+
+/* Cor do input ao focar */
+.form-container input:focus {   
+    color: #fff; 
+    background-color: #161718;
+    border: 1px solid #2e3133;
+    outline: none; 
+}
+
+.form-container input::placeholder {
+    color: #bebebe; 
+}
+
+.botao {
+    margin-top: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.botao button {
+    width: 100%;
+}
+
+.form-container button {
+    padding: 10px 40px;
+    font-size: 15px;
+    background: #688d38;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.footer {
+    margin-top: 5%;
+}
+
+input:invalid.touched,
+textarea:invalid.touched {
+    border: 1px solid rgb(124, 0, 0);
+}
+
+.error-message {
+    color: rgb(168, 0, 0);
+    font-size: 0.8em;
+    margin-top: 5px;
+}
+
+button:disabled {
+   background-color: #688d3894; 
+    cursor: default;  
+}
+
+/* mobile style */
+
+@media (max-width: 700px) {
+
+    .form-container {
+        margin: 20px;
+    }
+
+    .form-container .text {
+        margin: 20% 0% 10%;  
+    }
+}

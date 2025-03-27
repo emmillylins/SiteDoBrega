@@ -73,7 +73,7 @@ async function getCategorias() {
 
 async function postFaixas(faixa) {
   try {
-    const response = await fetch('https://localhost:5000/api/faixas', {
+    const response = await fetchWithAuth('https://localhost:5000/api/faixas', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'

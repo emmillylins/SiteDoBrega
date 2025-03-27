@@ -86,7 +86,9 @@ namespace Application.Services
 
                     return new
                     {
-                        Token = token
+                        Token = token,
+                        UserId = user.Id,
+                        Username = user.UserName
                     };
                 }
                 else throw new Exception("Senha incorreta.");
@@ -172,7 +174,7 @@ namespace Application.Services
 
             // Adiciona roles como claims
             var roles = await _userManager.GetRolesAsync(user);
-            foreach (var role in roles)
+             foreach (var role in roles)
             {
                 claims.Add(new Claim(ClaimTypes.Role, role));
             }

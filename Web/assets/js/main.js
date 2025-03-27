@@ -223,7 +223,7 @@ async function inserirFaixas(event) {
   const link = document.getElementById('link').value.replace(/height="(\d+)"/, 'height="152"');
   const categoriaId = document.getElementById('categoria').value;
   
-  let usuarioId = document.getElementById('usuario').value;
+  let usuarioId = localStorage.getItem('userId');
   if (!usuarioId) usuarioId = 'aae0b75e-ef82-4ed2-b45e-02de53ab4c61';
 
   const faixa = {
@@ -244,6 +244,14 @@ async function inserirFaixas(event) {
   }
 }
 
+function setUsername(){
+  const usuarioInput = document.getElementById('usuario');
+  const username = localStorage.getItem('username'); // Pega o username salvo no localStorage
+
+  if (username) {
+      usuarioInput.value = username; // Define o valor do input
+  }
+}
 
 function clearErrorMessages() {
   const errorMessages = document.querySelectorAll('.error-message');

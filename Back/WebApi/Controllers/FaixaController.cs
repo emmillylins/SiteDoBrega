@@ -51,7 +51,6 @@ namespace WebApi.Controllers
             }
         }
 
-        [AllowAnonymous]
         [HttpPost]
         public async Task<ActionResult> Inserir(CreateFaixaDTO DTO)
         {

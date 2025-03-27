@@ -48,6 +48,17 @@
     box-sizing: border-box;
 }
 
+.form-container input:disabled, 
+.form-container textarea:disabled, 
+.form-container select:disabled {
+    background-color: #161718 !important; /* Mantém o fundo igual */
+    color: #ffffffb6 !important; /* Mantém a cor do texto */
+    border: 1px solid #2e3133 !important; /* Mantém a borda */
+    opacity: 1; /* Remove a transparência padrão do disabled */
+    cursor: not-allowed; /* Indica visualmente que está desabilitado */
+}
+
+
 .form-container select {
     cursor: pointer;
 }

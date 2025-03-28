@@ -38,16 +38,21 @@
               <!-- navbar dinâmica -->
             </ul>
           </li>      
-          <li><a href="login.html">Login</a></li>
+          <li><a href="#">Sobre nós</a></li>
         </ul>
       </nav>
       <!-- end navbar -->
 
-      <div class="social-icons">
-        <a href="#" alt="twitter"><i class="bi bi-twitter"></i></a>
-        <a href="https://www.instagram.com/htemyl/" alt="instagram"><i class="bi bi-instagram"></i></a>
-        <a href="https://www.linkedin.com/in/emmilly-lins-82b06a235/" alt="linkedin" ><i class="bi bi-linkedin"></i></i></a>
+      <div class="icon" onclick="toggleMenu()">
+        <i class="bi bi-person-lines-fill"></i>
       </div>
+          <!-- Caixa de opções -->
+      <div class="dropdown-menu" id="menu">
+        <a href="login.html">Login</a>
+        <a href="cadastro.html">Cadastrar</a>
+        <a href="#" onclick="logout()">Sair da conta</a>
+      </div>
+
       <i class="mobile-nav-toggle mobile-nav-show bi bi-list"></i>
   </header>
   <!-- end header -->
@@ -98,14 +103,21 @@
   <footer class="footer">
     <div class="container">
       <div class="copyright">
-        &copy; Copyright <strong><span>SiteDoBrega</span></strong>. All Rights Reserved
+        &copy; Copyright <strong><span>SiteDoBrega</span></strong>. All Rights Reserved.
       </div>
-      <div class="credits">
-        Designed by <a href="https://github.com/emmillylins">htemyl</a>
-      </div>
+        <div class="social-icons">
+          <a href="#" alt="twitter"><i class="bi bi-twitter"></i></a>
+          <a href="https://www.instagram.com/htemyl/" alt="instagram"><i class="bi bi-instagram"></i></a>
+          <a href="https://www.linkedin.com/in/emmilly-lins-82b06a235/" alt="linkedin" ><i class="bi bi-linkedin"></i></i></a>
+        
+          <div class="credits">
+          Designed by <a href="https://github.com/emmillylins"><strong>htemyl</strong></a>.
+          </div>
+
+        </div>
     </div>
   </footer>
-  <!-- end footer -->  
+  <!-- end footer --> 
 
   <a href="#" class="scroll-top"><i class="bi bi-arrow-up-short"></i></a>
 

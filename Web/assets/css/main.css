@@ -26,9 +26,45 @@ a:hover, a {
   z-index: 1000;
 }
 
-.logo,
-.social-icons {
+.logo {
   flex: 1;
+}
+
+.header .icon {
+  color: #ffffff86;
+  font-size: 20px;
+  cursor: pointer;
+  line-height: 0;
+  transition: 0.5s;
+}
+
+/* Estilização do menu dropdown */
+.dropdown-menu {
+  position: absolute;
+  top: 40px;
+  right: 0;
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
+  overflow: hidden;
+  display: none;
+  transition: opacity 0.3s, visibility 0.3s, top 0.3s;
+  border-radius: 4px;  
+  background-color:#000000a2;
+}
+
+/* Estilização dos itens do menu */
+.dropdown-menu a {
+  display: block;
+  padding: 10px;
+  color: #9c9c9c;
+  font-size: 15px;
+  text-decoration: none;
+  font-size: 15px;
+  transition: color 0.3s;
+}
+
+/* Efeito hover */
+.dropdown-menu a:hover {
+  color: #f1f1f1;
 }
 
 .header .logo h1 {
@@ -40,28 +76,7 @@ a:hover, a {
   color: #688d38;
 }
 
-.header .social-icons {
-  display: flex;
-  padding-right: 7px;
-  justify-content: flex-end;
-  align-items: center;
-}
 
-.header .social-icons i {
-  font-size: 15px;
-  padding: 5px;
-}
-
-.header .social-icons a {
-  color: rgba(255, 255, 255, 0.5);
-  display: inline-block;
-  line-height: 0px;
-  transition: 0.3s;
-}
-
-.header .social-icons a:hover {
-  color: #fff;
-}
 
 @media (max-width: 900px) {
   
@@ -72,17 +87,17 @@ a:hover, a {
   .header .logo {
     margin-right: auto;
   }
-  .header .social-icons {
+  .social-icons {
     padding-right: 20px;
   }
   
-  .header .social-icons i {
+  .social-icons i {
     font-size: 15px;
     padding: 7px;
     z-index: 9996;
   }
   
-  .header .social-icons a {
+  .social-icons a {
     transition: 0.3s;
   }
 }
@@ -94,11 +109,11 @@ a:hover, a {
     margin: 20px 15px;
   }
 
-  .header .social-icons {    
+  .social-icons {    
     padding-right: 20px;
   }
 
-  .header .social-icons i {
+  .social-icons i {
     padding: 4px !important;
     z-index: 9996;
   }
@@ -109,7 +124,7 @@ a:hover, a {
   .header i {
     font-size: 24px;
   }
-  .header .social-icons a {
+  .social-icons a {
     padding-left: 5px;
   }
 }
@@ -313,7 +328,6 @@ a:hover, a {
   }
 
   .mobile-nav-show {
-
     color: #fff;
     font-size: 28px;
     cursor: pointer;
@@ -483,7 +497,8 @@ a:hover, a {
   }
   
   .footer .credits {
-    padding-top: 6px;
+    padding-bottom: 2px; 
+    padding-left: 7px;
     text-align: center;
     font-size: 13px;
     color: rgba(255, 255, 255, 0.8);
@@ -493,6 +508,30 @@ a:hover, a {
     letter-spacing: 0.5px;
     font-size: bold;
     color: #688d38;
+  }
+
+  .social-icons {
+    margin-top: 10px;
+    display: flex;
+    padding-right: 7px;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  .social-icons i {
+    font-size: 13px;
+    padding: 5px;
+  }
+  
+  .social-icons a {
+    color: rgba(255, 255, 255, 0.5);
+    display: inline-block;
+    line-height: 0px;
+    transition: 0.3s;
+  }
+  
+  .social-icons a:hover {
+    color: #fff;
   }
 
   @media (max-width: 1000px){

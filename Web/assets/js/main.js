@@ -66,6 +66,28 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 });
 
+//icone header ------------------------------
+function toggleMenu() {
+  var menu = document.getElementById("menu");
+  menu.style.display = menu.style.display === "block" ? "none" : "block";
+}
+
+function logout() {
+  alert("Você saiu da conta!");
+  localStorage.removeItem('token'); // Remove token do armazenamento local
+  window.location.href = 'login.html'; // Redireciona para login
+}
+
+document.addEventListener("click", function(event) {
+  var menu = document.getElementById("menu");
+  var icon = document.querySelector(".icon");
+
+  if (menu && icon && !menu.contains(event.target) && !icon.contains(event.target)) {
+    menu.style.display = "none";
+  }
+});
+// --------------------------------------
+
 function popularNavbar(categorias) {
   const navbarUl = document.querySelector('#dynamic-navbar');
   categorias.forEach(categoria => {

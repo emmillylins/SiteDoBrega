@@ -16,7 +16,7 @@
   
   <!-- Template Main CSS File -->
   <link href="assets/css/main.css" rel="stylesheet">
-  <link href="assets/css/cadastro.css" rel="stylesheet">
+  <link href="assets/css/login.css" rel="stylesheet">
 
   <link rel="manifest" href="manifest.json"/>
 </head>
@@ -57,44 +57,27 @@
   </header>
   <!-- end header -->
 
-  <section id="cadastro">
-    <div class="text">
-        <h2><span>Cadastro de breguinhas</span></h2>
-    </div>
+  <section id="login">    
     <form class="form-container" id="form-template" novalidate>
-        <div class="part-1">
-            <div>
-                <label for="titulo" class="form-label">Título</label>
-                <input type="text" class="form-control" id="titulo" placeholder="ex.: Masoquista" required>
-                <small class="error-message" id="titulo-error"></small>
-            </div>
-            <div>
-                <label for="artista" class="form-label">Artista</label>
-                <input type="text" class="form-control" id="artista" placeholder="ex.: Mc Reino" required>
-                <small class="error-message" id="artista-error"></small>
-            </div>
+        <div class="text">
+            <h2><span>Cadastro</span></h2>
+            <p>Crie uma nova conta</p>
         </div>
-        <div class="part-2">
-            <div>
-                <label for="categoria" class="form-label">Categoria</label>
-                <select id="categoria" class="form-select">
-                    <option selected>Escolha...</option>
-                    <option>...</option>
-                </select>
-            </div>
-            <div>
-                <label for="usuario" class="form-label">Nome de usuário</label>
-                <input type="text" class="form-control" id="usuario" placeholder="emmy" disabled>
-            </div>
+        <div class="row">
+            <label for="email" class="form-label">Email ou Username</label>
+            <input type="text" class="form-control" id="email" placeholder="example@example.com" required>
+            <small class="error-message" id="email-error"></small>
         </div>
-        <div>
-            <label for="link" class="form-label">Link</label>
-            <textarea class="form-control" id="link" rows="5" required placeholder="iframe style='' src='' width='' height='' frameBorder='' allowfullscreen='' allow='' loading=''/iframe>"></textarea>
-            <small class="error-message" id="link-error"></small>
-          </div>
+        <div class="row">
+            <label for="password" class="form-label">Senha</label>
+            <input type="text" class="form-control" id="password" placeholder="********" required>
+            <small class="error-message" id="password-error"></small>
+        </div>
         <div class="botao">
-            <button type="submit" id="submit-btn" disabled>Cadastrar</button>
-            <!-- <button type="button" id="add-form">+</button> -->
+            <button type="submit" id="submit-btn" disabled>Entrar</button>
+        </div>
+        <div class="row">
+            <p>Já possui uma conta? <a href="login.html">Faça login</a></p>
         </div>
     </form>
   </section>
@@ -117,7 +100,7 @@
         </div>
     </div>
   </footer>
-  <!-- end footer --> 
+  <!-- end footer -->
 
   <a href="#" class="scroll-top"><i class="bi bi-arrow-up-short"></i></a>
 
@@ -129,15 +112,12 @@
  
    <script>
       async function init() {
-        checkAuth();
-        setUsername();
         const categorias = await getCategorias();
         popularNavbar(categorias);
-        dropdownCategorias();
         disableButton();
         addValidationEvents();
         
-        document.getElementById('form-template').addEventListener('submit', inserirFaixas);
+        document.getElementById('form-template').addEventListener('submit', login);
       }
       document.addEventListener('DOMContentLoaded', init);
    </script>

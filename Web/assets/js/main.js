@@ -27,7 +27,7 @@ document.addEventListener('DOMContentLoaded', () => {
     if (!section) return;
 
     navbarlink.addEventListener('click', () => {
-      if (document.querySelector('.mobile-nav-active')) {
+      if (document.querySelector(' ')) {
         mobileNavToogle();
       }
     });

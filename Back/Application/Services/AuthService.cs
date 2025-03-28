@@ -59,8 +59,8 @@ namespace Application.Services
             {
                 var users = await _repository.SelectAsync();
                 var user = users.SingleOrDefault(u => u.Email == login.Email || u.UserName == login.Email) ?? throw new Exception("Usuário não encontrado.");
-                
-                if (!await _userManager.IsEmailConfirmedAsync(user)) 
+
+                if (!await _userManager.IsEmailConfirmedAsync(user))
                     throw new Exception("Email não confirmado, acesse seu email para confirmar sua conta.");
 
                 var loginResult = await _signInManager.PasswordSignInAsync(user, login.Password, false, true);
@@ -135,7 +135,7 @@ namespace Application.Services
                 var user = new ApplicationUser(dto.Cpf, dto.DataNasc, dto.Nome, dto.TipoUsuario)
                 {
                     UserName = dto.NomeUsuario,
-                    Email = dto.Email, 
+                    Email = dto.Email,
                     EmailConfirmed = true // Considera o e-mail automaticamente confirmado
                 };
 
@@ -167,14 +167,14 @@ namespace Application.Services
             // 1. Definir as claims do token
             var claims = new List<Claim>
             {
-                new(JwtRegisteredClaimNames.Sub, user.Id),           
-                new(JwtRegisteredClaimNames.Email, user.Email),       
-                new(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()) 
+                new(JwtRegisteredClaimNames.Sub, user.Id),
+                new(JwtRegisteredClaimNames.Email, user.Email),
+                new(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString())
             };
 
             // Adiciona roles como claims
             var roles = await _userManager.GetRolesAsync(user);
-             foreach (var role in roles)
+            foreach (var role in roles)
             {
                 claims.Add(new Claim(ClaimTypes.Role, role));
             }
@@ -185,11 +185,11 @@ namespace Application.Services
 
             // 3. Configuração do token
             var token = new JwtSecurityToken(
-                issuer: _configuration["Jwt:Issuer"],          
-                audience: _configuration["Jwt:Audience"],       
+                issuer: _configuration["Jwt:Issuer"],
+                audience: _configuration["Jwt:Audience"],
                 claims: claims,
-                expires: DateTime.UtcNow.AddHours(1),           
-                signingCredentials: creds                      
+                expires: DateTime.UtcNow.AddHours(1),
+                signingCredentials: creds
             );
 
             // 4. Gerar a string do token

@@ -32,10 +32,11 @@ a:hover, a {
 }
 
 .header .logo h1 {
-  font-family: 'Inter', sans-serif;
+  font-family: 'Roboto', 'Helvetica Neue', sans-serif;
   font-size: 25px;
   margin: 0;
-  font-weight: 500;
+  font-weight: 600;
+  text-transform: uppercase;
   color: #688d38;
 }
 

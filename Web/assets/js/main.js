@@ -136,7 +136,7 @@ function popularGrid(categorias) {
     count = (count + 1) % 3;
 
     const categoriaDiv = document.createElement('div');
-    categoriaDiv.id = 'cat';
+    categoriaDiv.id = 'cat'; 
     categoriaDiv.className = colClass;
 
     const link = document.createElement('a');
